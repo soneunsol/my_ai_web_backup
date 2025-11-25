@@ -3,3 +3,10 @@
 
 # MCP configuration
 .mcp.json
+
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+.vite/
