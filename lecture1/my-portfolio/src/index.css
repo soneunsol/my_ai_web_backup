@@ -1,0 +1,79 @@
+/* 컬러 팔레트 디자인 시스템 */
+:root {
+  /* Primary Colors - 네온 옐로우 시스템 */
+  --color-primary: #CFFF00;
+  --color-primary-light: #E4FF1A;
+  --color-primary-dark: #BAFF00;
+  --color-primary-glow: rgba(207, 255, 0, 0.3);
+
+  /* Secondary Colors - 다크 시스템 */
+  --color-secondary: #000000;
+  --color-secondary-light: #1A1A1A;
+  --color-accent: #E4FF1A;
+
+  /* Background Colors */
+  --color-bg-primary: #000000;
+  --color-bg-secondary: #F8F8F8;
+  --color-bg-tertiary: #FFFFFF;
+  --color-bg-card: #FAFAFA;
+
+  /* Text Colors */
+  --color-text-primary: #000000;
+  --color-text-secondary: #FFFFFF;
+  --color-text-muted: #666666;
+  --color-text-light: #999999;
+
+  /* Border & Outline Colors */
+  --color-border-light: #E0E0E0;
+  --color-border-medium: #CCCCCC;
+  --color-border-dark: #333333;
+
+  /* Interactive Colors */
+  --color-button-primary: #CFFF00;
+  --color-button-primary-text: #000000;
+  --color-button-hover: #E4FF1A;
+  --color-button-active: #BAFF00;
+  --color-link: #CFFF00;
+  --color-link-hover: #E4FF1A;
+
+  /* Shadow & Effects */
+  --shadow-neon: 0 0 20px rgba(207, 255, 0, 0.5);
+  --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-strong: 0 4px 16px rgba(0, 0, 0, 0.2);
+
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* CSS 초기화 */
+* {
+  box-sizing: border-box;
+}
+
+/* HTML, Body 초기화 */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Root 앱 컨테이너 설정 */
+#root {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 포커스 표시 */
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
