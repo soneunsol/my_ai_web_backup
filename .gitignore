@@ -15,5 +15,8 @@ dist/
 .env
 .env.local
 
+# Claude local settings
+.claude/settings.local.json
+
 # Exclude specific files
 momo.html
