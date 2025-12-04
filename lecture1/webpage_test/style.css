@@ -1,0 +1,402 @@
+/* 기본 설정 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #ecf0f1;
+    color: #2c3e50;
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    color: #3498db;
+}
+
+/* Material Icons */
+.material-icons {
+    font-size: 24px;
+    vertical-align: middle;
+    user-select: none;
+}
+
+/* Float 헬퍼 */
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.container {
+    overflow: hidden; /* Float 해제 */
+}
+
+/* 레이아웃 */
+.inner {
+    width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* 최상단 바 */
+.topbar {
+    background-color: #34495e;
+    color: #ecf0f1;
+    font-size: 14px;
+    padding: 10px 0;
+}
+
+.topbar a {
+    color: #ecf0f1;
+    margin: 0 10px;
+}
+
+.topbar a:hover {
+    color: #3498db;
+}
+
+.topbar .sns,
+.topbar .login {
+    padding: 5px 0;
+}
+
+.topbar .login a {
+    border-right: 1px solid #7f8c8d;
+    padding-right: 15px;
+}
+
+.topbar .login a:last-child {
+    border-right: none;
+}
+
+/* 메인 헤더 */
+.site-header {
+    background-color: #ffffff;
+    border-bottom: 3px solid #3498db; /* Flat 스타일 */
+    padding: 20px 0;
+    margin-bottom: 0;
+}
+
+.site-header .inner {
+    text-align: center;
+}
+
+/* 메뉴 (GNB) */
+.gnb {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.gnb li {
+    float: left;
+    margin-right: 25px;
+}
+
+.gnb a {
+    color: #2c3e50;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 10px 0;
+    display: inline-block;
+}
+
+.gnb a:hover {
+    color: #3498db;
+}
+
+.gnb .material-icons {
+    font-size: 28px;
+}
+
+/* 로고 - Float로 정렬 */
+.logo {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 20px;
+}
+
+.logo a {
+    display: inline-block; /* Flex 대신 inline-block 사용 */
+}
+
+.logo-icon {
+    font-size: 36px;
+    color: #3498db;
+    float: left; /* Float로 배치 */
+    margin-right: 10px;
+}
+
+.logo-text {
+    font-size: 24px;
+    font-weight: 700;
+    color: #2c3e50;
+    float: left; /* Float로 배치 */
+    line-height: 36px; /* 아이콘 높이에 맞춤 */
+}
+
+.logo a:hover .logo-icon,
+.logo a:hover .logo-text {
+    opacity: 0.8;
+}
+
+/* 유틸리티 메뉴 */
+.util {
+    float: right;
+    margin-top: 5px;
+}
+
+.util a {
+    float: left;
+    margin-left: 15px;
+    padding: 5px;
+}
+
+.util .material-icons {
+    font-size: 26px;
+    color: #2c3e50;
+}
+
+.util a:hover .material-icons {
+    color: #3498db;
+}
+
+/* 검색 박스 */
+.search-box {
+    float: left;
+    margin-left: 15px;
+}
+
+.search-box input[type="search"] {
+    float: left;
+    padding: 8px 15px;
+    border: 2px solid #bdc3c7;
+    border-radius: 25px 0 0 25px; /* Flat 스타일 */
+    outline: none;
+    font-size: 14px;
+    width: 180px;
+    height: 36px;
+}
+
+.search-box input[type="search"]:focus {
+    border-color: #3498db;
+}
+
+.search-box button {
+    float: left;
+    background-color: #bdc3c7;
+    color: white;
+    border: 2px solid #bdc3c7;
+    border-left: none;
+    border-radius: 0 25px 25px 0; /* Flat 스타일 */
+    padding: 6px 12px;
+    cursor: pointer;
+    height: 36px;
+}
+
+.search-box button .material-icons {
+    font-size: 18px;
+    color: white;
+    display: block;
+}
+
+.search-box button:hover {
+    background-color: #95a5a6;
+    border-color: #95a5a6;
+}
+
+/* 메인 콘텐츠 */
+.main-content {
+    padding: 0;
+}
+
+/* 히어로 섹션 - Float로 텍스트 배치 */
+.hero {
+    width: 100%;
+    height: 600px;
+    background-color: #34495e;
+    margin-bottom: 60px;
+}
+
+.hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    float: left; /* Float로 배치 */
+}
+
+.hero-text {
+    width: 600px;
+    margin: 200px 0 0 300px; /* 위치 조정 */
+    padding: 40px 60px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #ffffff;
+    border-radius: 10px; /* Flat 스타일 */
+}
+
+.hero-text h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.hero-text p {
+    font-size: 20px;
+}
+
+/* 콘텐츠 섹션 */
+.content {
+    margin-bottom: 60px;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    border: 2px solid #ecf0f1; /* Flat 스타일 */
+}
+
+.img-box {
+    width: 600px;
+}
+
+.img-box img {
+    width: 100%;
+    border-radius: 8px;
+    border: 3px solid #3498db;
+}
+
+.text-box {
+    width: 540px;
+    padding: 20px;
+}
+
+.text-box h2 {
+    font-size: 32px;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #3498db;
+    padding-bottom: 10px;
+}
+
+.text-box p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 15px;
+    line-height: 1.8;
+}
+
+/* 카드 섹션 */
+.cards {
+    margin-bottom: 60px;
+}
+
+.cards h2 {
+    text-align: center;
+    font-size: 32px;
+    color: #2c3e50;
+    margin-bottom: 40px;
+    border-bottom: 3px solid #3498db;
+    padding-bottom: 15px;
+}
+
+.card-wrap {
+    margin: 0 -10px;
+}
+
+.card {
+    width: 380px;
+    margin: 0 10px 20px 10px;
+    background-color: #ffffff;
+    border: 2px solid #ecf0f1; /* Flat 스타일 */
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.card:hover {
+    border-color: #3498db;
+}
+
+.card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 25px 20px;
+    text-align: center;
+}
+
+.card-body h3 {
+    font-size: 22px;
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+.card-body p {
+    font-size: 16px;
+    color: #7f8c8d;
+    line-height: 1.6;
+}
+
+/* 요약 섹션 */
+.summary {
+    margin-bottom: 40px;
+}
+
+.summary h2 {
+    text-align: center;
+    font-size: 32px;
+    color: #2c3e50;
+    margin-bottom: 30px;
+}
+
+.summary-box {
+    background-color: #ffffff;
+    border-left: 5px solid #3498db; /* Flat 스타일 */
+    padding: 30px;
+    border-radius: 5px;
+}
+
+.summary-box h3 {
+    font-size: 24px;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+.summary-box ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.summary-box li {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 15px;
+    padding-left: 25px;
+}
+
+.summary-box strong {
+    color: #3498db;
+}
+
+/* 푸터 */
+.site-footer {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    text-align: center;
+    padding: 40px 20px;
+    margin-top: 60px;
+}
+
+.site-footer p {
+    margin: 10px 0;
+    font-size: 14px;
+}

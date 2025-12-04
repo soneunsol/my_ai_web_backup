@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <!-- 문자 인코딩 설정: 한글 등 다양한 언어 표시 -->
+    <meta charset="UTF-8" />
+
+    <!-- IE 브라우저 호환성 설정 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- 반응형 웹을 위한 뷰포트 설정 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- 페이지 제목 -->
+    <title>초보자를 위한 웹페이지 예제</title>
+
+    <!-- Material Icons CDN -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- 외부 CSS 파일 연결 -->
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <!-- ==================== 최상단 바 (SNS & 로그인) ==================== -->
+    <!-- topbar: 페이지 맨 위에 보이는 작은 메뉴 영역 -->
+    <div class="topbar">
+        <!-- inner: 내용을 가운데 정렬하는 컨테이너 -->
+        <!-- container: float된 자식 요소들을 감싸는 컨테이너 -->
+        <div class="inner container">
+
+            <!-- 왼쪽: SNS 링크들 -->
+            <div class="sns float-left">
+                <a href="#">Facebook</a>
+                <a href="#">Twitter</a>
+                <a href="#">Instagram</a>
+            </div>
+
+            <!-- 오른쪽: 로그인 관련 링크들 -->
+            <div class="login float-right">
+                <a href="#">로그인</a>
+                <a href="#">회원가입</a>
+                <a href="#">마이페이지</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 메인 헤더 (로고 & 메뉴) ==================== -->
+    <!-- site-header: 웹사이트의 주요 상단 메뉴 영역 -->
+    <header class="site-header">
+        <div class="inner container">
+
+            <!-- 왼쪽: 메인 네비게이션 메뉴 -->
+            <!-- gnb: Global Navigation Bar (전역 네비게이션 바) -->
+            <ul class="gnb float-left">
+                <li><a href="#"><span class="material-icons">menu</span></a></li>
+                <li><a href="#">홈</a></li>
+                <li><a href="#">브랜드</a></li>
+                <li><a href="#">쇼핑</a></li>
+                <li><a href="#">이벤트</a></li>
+                <li><a href="#">커뮤니티</a></li>
+            </ul>
+
+            <!-- 중앙: 로고 -->
+            <div class="logo">
+                <a href="#">
+                    <span class="material-icons logo-icon">storefront</span>
+                    <span class="logo-text">MY BRAND</span>
+                </a>
+            </div>
+
+            <!-- 오른쪽: 유틸리티 메뉴 (아이콘 & 검색) -->
+            <div class="util float-right container">
+                <!-- 아이콘 링크들 -->
+                <a href="#"><span class="material-icons">shopping_cart</span></a>
+                <a href="#"><span class="material-icons">favorite</span></a>
+                <a href="#"><span class="material-icons">person</span></a>
+
+                <!-- 검색 폼 -->
+                <!-- 검색창 안에 버튼이 포함된 구조 -->
+                <div class="search-box">
+                    <input type="search" placeholder="검색하세요" />
+                    <button type="submit"><span class="material-icons">search</span></button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 메인 콘텐츠 -->
+    <main class="main-content">
+
+        <!-- 히어로 섹션 -->
+        <section class="hero container">
+            <img src="images/hero.jpg" alt="히어로 이미지">
+            <div class="hero-text float-left">
+                <h1>Float & Flat 디자인</h1>
+                <p>초보자를 위한 HTML/CSS 학습 페이지</p>
+            </div>
+        </section>
+
+        <div class="inner">
+
+            <!-- 섹션 1: 이미지 왼쪽, 텍스트 오른쪽 -->
+            <section class="content container">
+                <div class="img-box float-left">
+                    <img src="images/coffee.jpg" alt="커피">
+                </div>
+                <div class="text-box float-right">
+                    <h2>Float 속성 이해하기</h2>
+                    <p><strong>float: left</strong>는 요소를 왼쪽으로 띄웁니다.</p>
+                    <p><strong>container 클래스</strong>로 float를 해제합니다.</p>
+                </div>
+            </section>
+
+            <!-- 섹션 2: 텍스트 왼쪽, 이미지 오른쪽 -->
+            <section class="content container">
+                <div class="text-box float-left">
+                    <h2>Flat 디자인 알아보기</h2>
+                    <p><strong>Flat 디자인</strong>은 그림자를 최소화한 깔끔한 스타일입니다.</p>
+                    <p>단색 배경, 얇은 테두리, 명확한 색상이 특징입니다.</p>
+                </div>
+                <div class="img-box float-right">
+                    <img src="images/tech.jpg" alt="기술">
+                </div>
+            </section>
+
+            <!-- 3개 카드 -->
+            <section class="cards">
+                <h2>3개 카드 레이아웃</h2>
+                <div class="card-wrap container">
+                    <div class="card float-left">
+                        <img src="images/workspace.jpg" alt="작업공간">
+                        <div class="card-body">
+                            <h3>작업 공간</h3>
+                            <p>효율적인 작업 환경</p>
+                        </div>
+                    </div>
+                    <div class="card float-left">
+                        <img src="images/design.jpg" alt="디자인">
+                        <div class="card-body">
+                            <h3>창의적 디자인</h3>
+                            <p>현대적이고 감각적인 디자인</p>
+                        </div>
+                    </div>
+                    <div class="card float-left">
+                        <img src="images/mobile.jpg" alt="모바일">
+                        <div class="card-body">
+                            <h3>모바일 최적화</h3>
+                            <p>모든 기기에서 완벽한 경험</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 요약 -->
+            <section class="summary">
+                <h2>핵심 요약</h2>
+                <div class="summary-box">
+                    <h3>Float & Flat 디자인</h3>
+                    <ul>
+                        <li><strong>float: left</strong> - 왼쪽으로 배치</li>
+                        <li><strong>float: right</strong> - 오른쪽으로 배치</li>
+                        <li><strong>container</strong> - overflow: hidden으로 float 해제</li>
+                        <li><strong>Flat 디자인</strong> - 그림자 없음, 깔끔한 테두리</li>
+                    </ul>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- ==================== 푸터 ==================== -->
+    <footer class="site-footer">
+        <div class="inner">
+            <p>&copy; 2024 MY BRAND. 모든 권리 보유.</p>
+            <p>초보자를 위한 HTML/CSS 학습 예제 페이지</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>
