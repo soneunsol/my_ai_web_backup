@@ -4,19 +4,69 @@
  * Props: 없음
  *
  * 주요 기능:
- * - 포트폴리오 작품 목록 (추후 개발 예정)
- * - 프로젝트 카드 형태로 구성
- * - 네온 옐로우 컬러를 활용한 호버 효과
- * - 반응형 그리드 레이아웃
+ * - Supabase에서 프로젝트 목록 불러오기
+ * - 4열 카드 그리드 레이아웃 (반응형)
+ * - 프로젝트 썸네일 이미지 (image.thum.io API)
+ * - 기술 스택 아이콘 표시
+ * - 호버 효과 (확대, 그림자)
+ * - View Details 버튼으로 프로젝트 링크 연결
  */
-import { Box, Container, Typography, Card, CardContent, Grid } from '@mui/material';
+import { useState, useEffect } from 'react';
+import {
+  Box,
+  Container,
+  Typography,
+  Card,
+  CardMedia,
+  CardContent,
+  Grid,
+  Chip,
+  Button,
+  CircularProgress
+} from '@mui/material';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import { supabase } from '../supabaseClient';
 
 function Projects() {
-  const projectPlaceholders = [
-    { id: 1, title: 'Project 1', description: '첫 번째 프로젝트 설명이 들어갈 예정입니다.' },
-    { id: 2, title: 'Project 2', description: '두 번째 프로젝트 설명이 들어갈 예정입니다.' },
-    { id: 3, title: 'Project 3', description: '세 번째 프로젝트 설명이 들어갈 예정입니다.' }
-  ];
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
+  const fetchProjects = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('projects')
+        .select('*')
+        .eq('is_published', true)
+        .order('sort_order', { ascending: true });
+
+      if (error) throw error;
+      setProjects(data || []);
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          width: '100%',
+          minHeight: 'calc(100vh - 64px)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
+        <CircularProgress sx={{ color: '#CFFF00' }} />
+      </Box>
+    );
+  }
 
   return (
     <Box
@@ -29,8 +79,8 @@ function Projects() {
         py: { xs: 4, md: 8 }
       }}
     >
-      <Container maxWidth="lg" sx={{ py: 4 }}>
-        <Box sx={{ mb: 4 }}>
+      <Container maxWidth="xl" sx={{ py: 4 }}>
+        <Box sx={{ mb: 6 }}>
           <Typography
             variant="h1"
             sx={{
@@ -57,91 +107,172 @@ function Projects() {
               lineHeight: 1.8
             }}
           >
-            포트폴리오 작품들이 들어갈 예정입니다.
+            제가 작업한 프로젝트들을 소개합니다.
           </Typography>
         </Box>
 
-        <Grid container spacing={3}>
-          {projectPlaceholders.map((project) => (
-            <Grid key={project.id} item xs={12} md={4}>
+        <Grid container spacing={4}>
+          {projects.map((project) => (
+            <Grid key={project.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
               <Card
                 sx={{
                   height: '100%',
-                  backgroundColor: '#FAFAFA',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  backgroundColor: '#FFFFFF',
                   boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
                   transition: 'all 0.3s ease',
+                  borderRadius: 2,
+                  overflow: 'hidden',
                   '&:hover': {
-                    transform: 'translateY(-4px)',
-                    boxShadow: '0 4px 16px rgba(0, 0, 0, 0.2)',
-                    borderTop: '3px solid #CFFF00'
+                    transform: 'translateY(-8px) scale(1.02)',
+                    boxShadow: '0 12px 24px rgba(0, 0, 0, 0.2)',
+                    borderTop: '4px solid #CFFF00'
                   }
                 }}
               >
-                <CardContent sx={{ p: 4 }}>
+                <CardMedia
+                  component="img"
+                  height="200"
+                  image={project.thumbnail_url}
+                  alt={project.title}
+                  sx={{
+                    objectFit: 'cover',
+                    backgroundColor: '#F5F5F5'
+                  }}
+                />
+                <CardContent
+                  sx={{
+                    p: 3,
+                    flex: 1,
+                    display: 'flex',
+                    flexDirection: 'column'
+                  }}
+                >
                   <Typography
                     variant="h3"
                     sx={{
-                      fontSize: { xs: '1.5rem', md: '1.75rem' },
+                      fontSize: { xs: '1.25rem', md: '1.5rem' },
                       fontWeight: 600,
-                      mb: 2
+                      mb: 1.5
                     }}
                   >
                     {project.title}
                   </Typography>
+
                   <Typography
-                    variant="body1"
+                    variant="body2"
                     sx={{
                       color: '#666666',
-                      lineHeight: 1.8,
-                      mb: 2
+                      lineHeight: 1.6,
+                      mb: 2,
+                      flex: 1
                     }}
                   >
                     {project.description}
                   </Typography>
-                  <Typography
-                    variant="body2"
+
+                  <Box sx={{ mb: 2 }}>
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        color: '#999999',
+                        fontSize: '0.75rem',
+                        mb: 1,
+                        display: 'block'
+                      }}
+                    >
+                      기술 스택
+                    </Typography>
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                      {project.tech_stack.map((tech, index) => (
+                        <Chip
+                          key={index}
+                          label={tech}
+                          size="small"
+                          sx={{
+                            backgroundColor: '#F5F5F5',
+                            color: '#333333',
+                            fontSize: '0.7rem',
+                            height: '24px',
+                            '&:hover': {
+                              backgroundColor: '#CFFF00'
+                            }
+                          }}
+                        />
+                      ))}
+                    </Box>
+                  </Box>
+
+                  {project.project_date && (
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        color: '#999999',
+                        fontSize: '0.75rem',
+                        mb: 2
+                      }}
+                    >
+                      작업 날짜: {project.project_date}
+                    </Typography>
+                  )}
+
+                  <Button
+                    variant="contained"
+                    endIcon={<OpenInNewIcon />}
+                    href={project.detail_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     sx={{
-                      color: '#999999',
-                      fontSize: '0.9rem'
+                      backgroundColor: '#333333',
+                      color: '#FFFFFF',
+                      fontWeight: 600,
+                      py: 1,
+                      '&:hover': {
+                        backgroundColor: '#CFFF00',
+                        color: '#000000'
+                      }
                     }}
                   >
-                    프로젝트 상세 정보, 기술 스택, 링크 등이 추가될 예정입니다.
-                  </Typography>
+                    View Details
+                  </Button>
                 </CardContent>
               </Card>
             </Grid>
           ))}
         </Grid>
 
-        <Box
-          sx={{
-            mt: 6,
-            p: 4,
-            backgroundColor: '#F8F8F8',
-            borderRadius: 2,
-            textAlign: 'center'
-          }}
-        >
-          <Typography
-            variant="h3"
+        {projects.length === 0 && (
+          <Box
             sx={{
-              fontSize: { xs: '1.25rem', md: '1.5rem' },
-              fontWeight: 600,
-              mb: 2
+              mt: 6,
+              p: 4,
+              backgroundColor: '#F8F8F8',
+              borderRadius: 2,
+              textAlign: 'center'
             }}
           >
-            더 많은 프로젝트 준비 중
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{
-              color: '#666666',
-              lineHeight: 1.8
-            }}
-          >
-            추가 프로젝트가 계속 업데이트될 예정입니다.
-          </Typography>
-        </Box>
+            <Typography
+              variant="h3"
+              sx={{
+                fontSize: { xs: '1.25rem', md: '1.5rem' },
+                fontWeight: 600,
+                mb: 2
+              }}
+            >
+              프로젝트 준비 중
+            </Typography>
+            <Typography
+              variant="body1"
+              sx={{
+                color: '#666666',
+                lineHeight: 1.8
+              }}
+            >
+              곧 멋진 프로젝트들을 선보일 예정입니다.
+            </Typography>
+          </Box>
+        )}
       </Container>
     </Box>
   );

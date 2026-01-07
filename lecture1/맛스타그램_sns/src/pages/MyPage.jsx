@@ -16,7 +16,6 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CloseIcon from '@mui/icons-material/Close';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PostCard from '../components/ui/PostCard';
-import TopBar from '../components/common/TopBar';
 import BottomNav from '../components/common/BottomNav';
 import { supabase } from '../supabaseClient';
 
@@ -165,8 +164,6 @@ function MyPage() {
         backgroundColor: 'background.default',
       }}
     >
-      <TopBar />
-
       <Container
         maxWidth="sm"
         sx={{
@@ -310,8 +307,9 @@ function MyPage() {
           }}
           BackdropProps={{
             sx: {
-              backdropFilter: 'blur(8px)',
-              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+              backdropFilter: 'blur(10px)',
+              backgroundColor: 'rgba(0, 0, 0, 0.6)',
+              bottom: 64,
             },
           }}
         >
@@ -321,23 +319,37 @@ function MyPage() {
               display: 'flex',
               flexDirection: 'column',
               position: 'relative',
+              height: '100%',
             }}
           >
             <IconButton
               onClick={handleCloseModal}
               sx={{
                 position: 'absolute',
-                top: 8,
-                right: 8,
-                zIndex: 1,
-                backgroundColor: 'background.paper',
+                top: 16,
+                right: 16,
+                zIndex: 1300,
+                backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                '&:hover': {
+                  backgroundColor: 'rgba(255, 255, 255, 1)',
+                },
+                boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
               }}
             >
               <CloseIcon />
             </IconButton>
             {selectedPost && (
-              <Box sx={{ flex: 1, overflow: 'auto', pt: 6 }}>
-                <Container maxWidth='sm'>
+              <Box
+                sx={{
+                  flex: 1,
+                  overflow: 'auto',
+                  pt: 2,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'flex-start',
+                }}
+              >
+                <Container maxWidth='md' sx={{ py: 2 }}>
                   <PostCard
                     post={selectedPost}
                     user={user}

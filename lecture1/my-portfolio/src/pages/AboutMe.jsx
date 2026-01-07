@@ -9,6 +9,7 @@
  * - showInHome 속성으로 홈 페이지 표시 여부 관리
  * - 오로라 테마 디자인 (연보라 그라디언트, 별 모티브)
  * - 반응형 디자인
+ * - Context API를 통한 전역 상태 관리
  */
 import { useState } from 'react';
 import {
@@ -28,134 +29,19 @@ import {
 import SchoolIcon from '@mui/icons-material/School';
 import CodeIcon from '@mui/icons-material/Code';
 import WorkIcon from '@mui/icons-material/Work';
-import HomeIcon from '@mui/icons-material/Home';
 import StarIcon from '@mui/icons-material/Star';
 import CloseIcon from '@mui/icons-material/Close';
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
+import { usePortfolio } from '../contexts/PortfolioContext';
+import SkillsSection from '../components/landing/SkillsSection';
 
 function AboutMe() {
   const [currentTab, setCurrentTab] = useState(0);
   const [skillModalOpen, setSkillModalOpen] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState(null);
 
-  // About Me 데이터 구조
-  const aboutMeData = {
-    basicInfo: {
-      name: '손은솔',
-      education: 'sbs아카데미 컴퓨터 학원',
-      major: '웹 개발',
-      experience: '신입',
-      photo: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop'
-    },
-    sections: [
-      {
-        id: 'dev-story',
-        title: '나의 개발 스토리',
-        showInHome: true,
-        content: {
-          start: {
-            title: '개발을 시작하게 된 계기',
-            text: '나를 간략히 표현하는 웹사이트를 만들고 싶었습니다. 처음에는 단순히 나를 소개하는 페이지를 만들고 싶다는 생각이었지만, 코드를 작성하면서 점점 더 깊이 빠져들게 되었습니다.'
-          },
-          value: {
-            title: '핵심 가치관',
-            text: '즐겁게 디자인하기. 개발은 단순히 기능을 구현하는 것이 아니라, 사용자에게 즐거움을 주는 경험을 만드는 일이라고 생각합니다. 아름다운 UI와 부드러운 UX를 통해 사용자가 웃을 수 있는 웹을 만들고 싶습니다.'
-          },
-          personal: {
-            title: '개인적 매력',
-            hobby: '취미: 줌바 💃',
-            hobbyDesc: '리듬을 타며 스트레스를 날려버립니다. 코드를 짜는 것도 일종의 춤이라고 생각해요!',
-            interest: '관심사: AI 🤖',
-            interestDesc: 'ChatGPT와 함께 코딩하는 시대. AI를 도구로 활용하는 개발자가 되고 싶습니다.'
-          },
-          goal: {
-            title: '성장 목표',
-            text: '시니어 프론트엔드 개발자가 되는 것이 목표입니다. React의 깊은 이해, 성능 최적화, 아키텍처 설계 능력을 갖춘 개발자로 성장하고 싶습니다.',
-            roadmap: [
-              { year: '2025', goal: '주니어 개발자 취업', status: '진행 중' },
-              { year: '2026', goal: '중급 프로젝트 리드', status: '목표' },
-              { year: '2028', goal: '시니어 개발자 도달', status: '목표' }
-            ]
-          }
-        }
-      },
-      {
-        id: 'philosophy',
-        title: '개발 철학',
-        showInHome: true,
-        content: {
-          principles: [
-            {
-              title: '사용자 중심 개발',
-              description: '항상 사용자의 입장에서 생각하고, 사용자가 편리하게 사용할 수 있는 인터페이스를 만들기 위해 노력합니다.'
-            },
-            {
-              title: '코드의 가독성',
-              description: '좋은 코드는 다른 개발자가 읽기 쉬운 코드입니다. 명확한 변수명, 함수명, 그리고 적절한 주석을 통해 유지보수가 쉬운 코드를 작성합니다.'
-            },
-            {
-              title: '지속적인 학습',
-              description: '기술은 빠르게 변화합니다. 새로운 기술을 배우는 것을 두려워하지 않고, 항상 더 나은 방법을 찾기 위해 노력합니다.'
-            }
-          ]
-        }
-      },
-      {
-        id: 'personal',
-        title: '개인적인 이야기',
-        showInHome: false,
-        content: {
-          background: '컴퓨터 학원에서 웹 개발을 처음 배우기 시작했습니다. 처음에는 HTML, CSS부터 시작했지만, JavaScript를 배우면서 프로그래밍의 재미를 느꼈습니다.',
-          motivation: '웹 개발자가 되고 싶은 이유는 내가 만든 것이 실제로 사람들에게 사용되는 것을 보고 싶기 때문입니다. 작은 기능 하나라도 누군가의 일상을 편리하게 만들 수 있다는 것이 매력적입니다.',
-          future: '앞으로는 프론트엔드뿐만 아니라 백엔드, 데이터베이스까지 전체적인 웹 개발 프로세스를 이해하는 풀스택 개발자로 성장하고 싶습니다.'
-        }
-      },
-      {
-        id: 'skills',
-        title: 'Developer\'s Menu',
-        showInHome: true,
-        content: {
-          skills: [
-            {
-              name: 'HTML',
-              description: '웹의 뼈대를 만듭니다',
-              level: '下',
-              detail: 'HTML5 시맨틱 태그를 활용하여 구조적이고 접근성 높은 웹 페이지를 작성합니다.',
-              experience: 'sbs아카데미에서 기초부터 학습하여 다양한 웹 페이지 구조를 이해하고 있습니다.'
-            },
-            {
-              name: 'CSS',
-              description: '아름다운 스타일을 입힙니다',
-              level: '下',
-              detail: 'CSS3, Flexbox, Grid를 활용한 반응형 레이아웃 디자인과 애니메이션 효과를 구현합니다.',
-              experience: 'MUI를 사용한 컴포넌트 스타일링과 테마 커스터마이징 경험이 있습니다.'
-            },
-            {
-              name: 'JavaScript',
-              description: '생명을 불어넣습니다',
-              level: '下',
-              detail: 'ES6+ 문법을 활용한 모던 JavaScript 개발과 DOM 조작, 이벤트 처리를 수행합니다.',
-              experience: '비동기 처리, Promise, async/await를 활용한 데이터 통신을 구현하고 있습니다.'
-            },
-            {
-              name: 'React',
-              description: '컴포넌트로 세상을 만듭니다',
-              level: '下',
-              detail: 'React Hooks를 활용한 함수형 컴포넌트 개발과 상태 관리를 수행합니다.',
-              experience: 'React Router, MUI를 활용한 SPA 개발 경험과 Supabase 연동 프로젝트를 진행했습니다.'
-            },
-            {
-              name: 'Node.js',
-              description: '서버와 대화합니다',
-              level: '下',
-              detail: 'Node.js 기반 백엔드 개발의 기초를 이해하고 API 통신을 구현합니다.',
-              experience: 'Express를 활용한 간단한 REST API 개발 경험이 있습니다.'
-            }
-          ]
-        }
-      }
-    ]
-  };
+  // Context에서 데이터 가져오기
+  const { aboutMeData } = usePortfolio();
 
   const handleTabChange = (event, newValue) => {
     setCurrentTab(newValue);
@@ -377,6 +263,15 @@ function AboutMe() {
                   }
                 />
               ))}
+              {/* Developer's Menu 탭 추가 */}
+              <Tab
+                label={
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    Developer's Menu
+                    <StarIcon sx={{ fontSize: '1rem', color: '#C4A1FF' }} />
+                  </Box>
+                }
+              />
             </Tabs>
           </Box>
 
@@ -659,154 +554,74 @@ function AboutMe() {
               </Box>
             )}
 
-            {/* Developer's Menu (Skills) */}
+            {/* Developer's Menu (Skills) - 업그레이드 버전 */}
             {currentTab === 3 && (
               <Box>
                 {/* 메뉴판 헤더 */}
                 <Box
                   sx={{
                     textAlign: 'center',
-                    mb: 4,
+                    mb: 5,
                     pb: 3,
                     borderBottom: '2px dashed rgba(196, 161, 255, 0.3)'
                   }}
                 >
                   <RestaurantMenuIcon
                     sx={{
-                      fontSize: '3rem',
+                      fontSize: '3.5rem',
                       color: '#C4A1FF',
                       mb: 2,
-                      filter: 'drop-shadow(0 0 10px rgba(196, 161, 255, 0.6))'
+                      filter: 'drop-shadow(0 0 15px rgba(196, 161, 255, 0.7))',
+                      animation: 'float 3s ease-in-out infinite',
+                      '@keyframes float': {
+                        '0%, 100%': { transform: 'translateY(0px)' },
+                        '50%': { transform: 'translateY(-8px)' }
+                      }
                     }}
                   />
                   <Typography
                     variant="h3"
                     sx={{
-                      fontSize: { xs: '1.8rem', md: '2.2rem' },
+                      fontSize: { xs: '2rem', md: '2.5rem' },
                       fontFamily: '"Playfair Display", "Noto Serif KR", serif',
                       fontWeight: 700,
                       mb: 1,
                       color: '#FFFFFF',
-                      textShadow: '0 0 15px rgba(196, 161, 255, 0.5)'
+                      textShadow: '0 0 20px rgba(196, 161, 255, 0.6)'
                     }}
                   >
-                    Developer's Menu
+                    Developer's Skills
                   </Typography>
                   <Typography
                     variant="body2"
                     sx={{
                       fontStyle: 'italic',
                       color: '#B8B8D0',
-                      fontSize: '0.95rem'
+                      fontSize: '1rem',
+                      mb: 2
                     }}
                   >
-                    Today's Special
+                    나의 기술 스택 ✨
                   </Typography>
+                  <Box
+                    sx={{
+                      width: '100px',
+                      height: '4px',
+                      background: 'linear-gradient(90deg, #C4A1FF 0%, #A8D8FF 50%, #FFC4E8 100%)',
+                      mx: 'auto',
+                      borderRadius: '10px',
+                      boxShadow: '0 0 12px rgba(196, 161, 255, 0.7)'
+                    }}
+                  />
                 </Box>
 
-                {/* 스킬 메뉴 목록 */}
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                  {aboutMeData.sections[3].content.skills.map((skill, index) => (
-                    <Card
-                      key={index}
-                      onClick={() => handleSkillClick(skill)}
-                      sx={{
-                        background: 'linear-gradient(135deg, rgba(196, 161, 255, 0.05) 0%, rgba(168, 216, 255, 0.05) 100%)',
-                        backdropFilter: 'blur(10px)',
-                        border: '1px solid rgba(196, 161, 255, 0.2)',
-                        boxShadow: 'none',
-                        cursor: 'pointer',
-                        transition: 'all 0.3s ease',
-                        '&:hover': {
-                          background: 'linear-gradient(135deg, rgba(196, 161, 255, 0.15) 0%, rgba(168, 216, 255, 0.15) 100%)',
-                          borderColor: '#C4A1FF',
-                          transform: 'translateX(8px)',
-                          boxShadow: '0 0 25px rgba(196, 161, 255, 0.4)',
-                          '& .skill-dots': {
-                            animation: 'sparkle 1s infinite'
-                          }
-                        },
-                        '@keyframes sparkle': {
-                          '0%, 100%': { opacity: 0.4 },
-                          '50%': { opacity: 1 }
-                        }
-                      }}
-                    >
-                      <CardContent sx={{ p: { xs: 2.5, md: 3 } }}>
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            gap: 2,
-                            flexWrap: 'wrap'
-                          }}
-                        >
-                          {/* 스킬 이름 */}
-                          <Box sx={{ flex: { xs: '1 1 100%', md: '0 1 180px' } }}>
-                            <Typography
-                              variant="h4"
-                              sx={{
-                                fontSize: { xs: '1.3rem', md: '1.5rem' },
-                                fontWeight: 700,
-                                color: '#FFFFFF',
-                                fontFamily: '"Playfair Display", "Noto Serif KR", serif'
-                              }}
-                            >
-                              {skill.name}
-                            </Typography>
-                          </Box>
-
-                          {/* 점선 */}
-                          <Box
-                            className="skill-dots"
-                            sx={{
-                              flex: 1,
-                              borderBottom: '2px dotted rgba(196, 161, 255, 0.4)',
-                              minWidth: '60px',
-                              display: { xs: 'none', md: 'block' },
-                              transition: 'opacity 0.3s ease'
-                            }}
-                          />
-
-                          {/* 숙련도 (기울임체) */}
-                          <Box sx={{ minWidth: '60px', textAlign: 'right' }}>
-                            <Typography
-                              variant="body1"
-                              sx={{
-                                fontSize: { xs: '1.2rem', md: '1.4rem' },
-                                fontStyle: 'italic',
-                                fontWeight: 600,
-                                color: '#C4A1FF',
-                                fontFamily: '"Playfair Display", "Noto Serif KR", serif'
-                              }}
-                            >
-                              {skill.level}
-                            </Typography>
-                          </Box>
-                        </Box>
-
-                        {/* 설명 */}
-                        <Typography
-                          variant="body2"
-                          sx={{
-                            mt: 1.5,
-                            fontSize: '0.95rem',
-                            color: '#E0D4FF',
-                            fontStyle: 'italic'
-                          }}
-                        >
-                          "{skill.description}"
-                        </Typography>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </Box>
+                {/* 스킬 섹션 컴포넌트 */}
+                <SkillsSection skills={aboutMeData.skills} />
 
                 {/* 메뉴판 푸터 */}
                 <Box
                   sx={{
-                    mt: 4,
+                    mt: 5,
                     pt: 3,
                     borderTop: '2px dashed rgba(196, 161, 255, 0.3)',
                     textAlign: 'center'
@@ -817,21 +632,21 @@ function AboutMe() {
                     sx={{
                       color: '#B8B8D0',
                       fontStyle: 'italic',
-                      fontSize: '0.85rem'
+                      fontSize: '0.95rem',
+                      display: 'block',
+                      mb: 1
                     }}
                   >
                     * 숙련도: 上(상) 中(중) 下(하)
                   </Typography>
-                  <br />
                   <Typography
                     variant="caption"
                     sx={{
                       color: '#B8B8D0',
-                      fontSize: '0.85rem',
-                      mt: 1
+                      fontSize: '0.9rem'
                     }}
                   >
-                    클릭하시면 상세 정보를 확인하실 수 있습니다
+                    카드에 마우스를 올리면 상세 정보를 확인할 수 있습니다
                   </Typography>
                 </Box>
               </Box>
