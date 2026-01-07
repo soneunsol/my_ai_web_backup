@@ -1,0 +1,23 @@
+# Local Netlify folder
+.netlify
+
+# MCP configuration
+.mcp.json
+
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+.vite/
+
+# Environment variables
+.env
+.env.local
+
+# Claude local settings
+.claude/settings.local.json
+
+# Exclude specific files
+momo.html
+nul
